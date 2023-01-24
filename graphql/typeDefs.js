@@ -36,17 +36,28 @@ const typeDefs = `#graphql
     }
 
 
+    input UserInputUpdate {
+        firstName: String
+        lastName: String
+        gender: GenderEnum
+        phone: String
+        email: String
+        isMarried: Boolean
+    }
+
+
 
     type Query {
         users: [User!]!
         user(id:ID!):User
-        posts: [Post!]
+        posts: [Post!]!
         post(id:ID!):Post
     }
 
 
     type Mutation{
         addUser(input: UserInput):User
+        userUpdate(id:ID!, input:UserInputUpdate):User
     }
 
 

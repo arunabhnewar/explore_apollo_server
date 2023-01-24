@@ -36,6 +36,39 @@ const resolvers = {
             users.push(user);
             return user;
         },
+
+        userUpdate(_, { id, input: { firstName, lastName, gender, phone, email, isMarried } }) {
+
+            let userUpdate = null;
+            users.forEach(user => {
+                if (user.id == id) {
+
+                    if (firstName) {
+                        user.firstName = firstName;
+                    }
+                    if (lastName) {
+                        user.lastName = lastName;
+                    }
+                    if (gender) {
+                        user.gender = gender;
+                    }
+                    if (phone) {
+                        user.phone = phone;
+                    }
+                    if (email) {
+                        user.email = email;
+                    }
+                    if (isMarried) {
+                        user.isMarried = isMarried;
+                    }
+
+                    userUpdate = user;
+                }
+            });
+            return userUpdate;
+        },
+
+
     },
 
     Post: {

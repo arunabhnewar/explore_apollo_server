@@ -1,4 +1,4 @@
-const { users } = require("../data")
+const { users, posts } = require("../data")
 
 const resolvers = {
     Query: {
@@ -10,8 +10,16 @@ const resolvers = {
             return users.find(user => user.id == id)
         },
 
+        posts() {
+            return posts;
+        },
+
+        post(_, { id }) {
+            return posts.find(post => post.id == id)
+        },
 
     },
+
     Mutation: {
         addUser(_, { input: { firstName, lastName, gender, phone, email, isMarried } }) {
 
@@ -29,6 +37,25 @@ const resolvers = {
             return user;
         },
     },
+
+    Post: {
+        user(post) {
+            return users.find(user => user.id == post.user)
+        }
+    },
+
+    User: {
+        posts(user) {
+            return posts.filter(post => {
+
+                if (user.posts.includes(post.id)) {
+                    return true
+                } else {
+                    return false;
+                }
+            })
+        }
+    }
 };
 
 

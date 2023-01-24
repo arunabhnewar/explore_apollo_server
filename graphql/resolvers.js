@@ -68,6 +68,34 @@ const resolvers = {
             return userUpdate;
         },
 
+        addPost(_, { input: { title, description, user } }) {
+            const post = {
+
+                id: posts.length + 1,
+                title,
+                description,
+                user
+            }
+            posts.push(post);
+            return post
+        },
+
+        postUpdate(_, { id, input: { title, description, user } }) {
+
+            let postUpdate = null;
+            posts.forEach(post => {
+
+                if (post.id !== id) return;
+
+                if (title) post.title = title;
+                if (description) post.description = description;
+                if (user) post.user = user;
+
+                postUpdate = post;
+            })
+            return postUpdate;
+        },
+
 
     },
 

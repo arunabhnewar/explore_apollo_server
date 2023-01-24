@@ -26,6 +26,22 @@ const typeDefs = `#graphql
     }
 
 
+
+    input PostInput{
+        title: String!
+        description: String!
+        user: ID!
+
+    }
+
+
+    input PostInputUpdate{
+        title: String
+        description: String
+        user: ID
+    }
+
+
     input UserInput{
         firstName: String!
         lastName: String!
@@ -58,6 +74,10 @@ const typeDefs = `#graphql
     type Mutation{
         addUser(input: UserInput):User
         userUpdate(id:ID!, input:UserInputUpdate):User
+        addPost(input:PostInput):Post
+        postUpdate(id:ID!, input: PostInputUpdate):Post
+        userDelete(id:ID!):Boolean!
+        postDelete(id:ID!):Boolean!
     }
 
 

@@ -1,23 +1,32 @@
 const typeDefs = `#graphql
 
+    scalar DateType
+    scalar PasswordType
+    scalar EmailType
+
+
+    """Gender defined"""
     enum GenderEnum {
         male 
         female 
     }
 
 
+    """Single User data"""
     type User {
         id: ID!
         firstName: String!
         lastName: String!
         gender: GenderEnum!
         phone: String!
-        email: String!
+        email: EmailType!
         isMarried: Boolean!
         posts:[Post!]
+        createdAt: DateType!
+        password: PasswordType!
     }
 
-
+    """User Post"""
     type Post {
         id: ID!
         title: String!
@@ -47,8 +56,9 @@ const typeDefs = `#graphql
         lastName: String!
         gender: GenderEnum!
         phone: String!
-        email: String!
+        email: EmailType!
         isMarried: Boolean!
+        password: PasswordType!
     }
 
 
@@ -57,8 +67,9 @@ const typeDefs = `#graphql
         lastName: String
         gender: GenderEnum
         phone: String
-        email: String
+        email: EmailType
         isMarried: Boolean
+        password: PasswordType
     }
 
 

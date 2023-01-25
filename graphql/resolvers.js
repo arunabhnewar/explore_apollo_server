@@ -1,4 +1,8 @@
-const { users, posts } = require("../data")
+// Dependencies
+const { users, posts } = require("../data");
+const { DateType, EmailType, PasswordType } = require("./customTypes");
+
+
 
 const resolvers = {
     Query: {
@@ -21,7 +25,7 @@ const resolvers = {
     },
 
     Mutation: {
-        addUser(_, { input: { firstName, lastName, gender, phone, email, isMarried } }) {
+        addUser(_, { input: { firstName, lastName, gender, phone, email, isMarried, password } }) {
 
             const user = {
                 id: users.length + 1,
@@ -32,12 +36,14 @@ const resolvers = {
                 email,
                 isMarried,
                 posts: [],
+                createdAt: new Date(),
+                password
             }
             users.push(user);
             return user;
         },
 
-        userUpdate(_, { id, input: { firstName, lastName, gender, phone, email, isMarried } }) {
+        userUpdate(_, { id, input: { firstName, lastName, gender, phone, email, isMarried, password } }) {
 
             let userUpdate = null;
             users.forEach(user => {
@@ -60,6 +66,9 @@ const resolvers = {
                     }
                     if (isMarried) {
                         user.isMarried = isMarried;
+                    }
+                    if (password) {
+                        user.password = password;
                     }
 
                     userUpdate = user;
@@ -96,6 +105,28 @@ const resolvers = {
             return postUpdate;
         },
 
+        userDelete(_, { id }) {
+            const index = users.findIndex((user) => user.id == id);
+
+
+            if (index >= 0) {
+                users.splice(index, 1);
+            } else {
+                return false;
+            }
+        },
+
+        postDelete(_, { id }) {
+            const index = posts.findIndex((post) => post.id == id);
+
+
+            if (index >= 0) {
+                posts.splice(index, 1);
+            } else {
+                return false;
+            }
+        },
+
 
     },
 
@@ -116,7 +147,12 @@ const resolvers = {
                 }
             })
         }
-    }
+    },
+
+    DateType: DateType,
+    PasswordType: PasswordType,
+    EmailType: EmailType,
+
 };
 
 
